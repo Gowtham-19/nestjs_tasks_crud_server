@@ -10,9 +10,10 @@ import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt-paytload.interface';
-
+import { Logger } from '@nestjs/common';
 @Injectable()
 export class AuthService {
+  private logger = new Logger('User Service');
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private jwtService: JwtService,
@@ -31,6 +32,7 @@ export class AuthService {
     } catch (error) {
       if (error.code == 23505) {
         //duplicate username
+        this.logger.error('username already exist');
         throw new ConflictException('username already exist');
       }
     }
@@ -46,6 +48,7 @@ export class AuthService {
       const accessToken: string = await this.jwtService.sign(payload);
       return { accessToken };
     } else {
+      this.logger.error('Please check your login credintials');
       throw new UnauthorizedException('Please check your login credintials');
     }
   }
