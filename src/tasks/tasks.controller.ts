@@ -15,8 +15,8 @@ import { UpdateTaskStatusDto } from './dto/update-task-status-dto';
 import { TasksService } from './tasks.service';
 import { Task } from './task.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/auth/get-user.decroator';
-import { User } from 'src/auth/user.entity';
+import { GetUser } from '../auth/get-user.decroator';
+import { User } from '../auth/user.entity';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
@@ -35,6 +35,7 @@ export class TasksController {
     @GetUser() user: User,
   ): Promise<Task[]> {
     this.logger.verbose(`user ${user.username} reriving all tasks`);
+    console.log('data of user', user);
     return this.taskService.getTasks(filterDto, user);
   }
 

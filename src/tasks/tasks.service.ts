@@ -5,7 +5,7 @@ import { GetTaskFilterDto } from './dto/get-task-filter-dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Task } from './task.entity';
-import { User } from 'src/auth/user.entity';
+import { User } from '../auth/user.entity';
 import { Logger } from '@nestjs/common';
 @Injectable()
 export class TasksService {
@@ -29,7 +29,7 @@ export class TasksService {
       );
     }
     const tasks = await query.getMany();
-
+    console.log('data of final tasks', tasks);
     return tasks;
   }
 

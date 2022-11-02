@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Exclude } from 'class-transformer';
-import { User } from 'src/auth/user.entity';
+import { User } from '../auth/user.entity';
 import { Entity,PrimaryGeneratedColumn,Column, ManyToOne } from 'typeorm';
 import { TaskStatus } from './task-status-enum';
 
@@ -14,7 +14,7 @@ export class Task {
     @Column()
     description:string;
     @Column()
-    status: TaskStatus
+    status: string
 
     @ManyToOne((_type) => User, user => user.task, {eager:false})
     @Exclude( { toPlainOnly:true})
